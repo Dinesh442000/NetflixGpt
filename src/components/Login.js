@@ -21,7 +21,7 @@ const Login = () => {
     setErrorMessage(msg)
     //console.log(msg);
 
-    SignIn / Sign Up
+    //SignIn / Sign Up
 
   }
 
