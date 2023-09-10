@@ -1,13 +1,17 @@
 import React, { useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
 import Header from "./Header";
-import {  createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { 
+  createUserWithEmailAndPassword, signInWithEmailAndPassword 
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
+import {useNavigate} from "react-router-dom"
 
 const Login = () => {
-
+  const navigate = useNavigate()
   const [isSignInForm,setIsSignInForm] = useState(true)
   const [errorMessage,setErrorMessage] = useState(null)
+ 
   const email = useRef(null)
   const password = useRef(null)
   const toggleSignInForm = ()=>{
@@ -31,6 +35,7 @@ const Login = () => {
         .then((userCredential) => { 
         const user = userCredential.user;
         console.log(user);
+        navigate("/browse")
   })
       .catch((error) => {
        const errorCode = error.code;
@@ -44,6 +49,7 @@ const Login = () => {
        .then((userCredential) => {
        const user = userCredential.user;
         console.log(user);
+        navigate("/browse")
   })
        .catch((error) => {
        const errorCode = error.code;
@@ -71,7 +77,7 @@ const Login = () => {
 
       <input type="text" ref={email} placeholder="Email Address" className="p-4 my-4 w-full bg-gray-700"></input>
      
-      <input type="password" ref={password} placeholder="Password" className="p-4 my-4 w-full bg-gray-700"></input>
+      <input type="password" autoComplete="cc-number" ref={password} placeholder="Password" className="p-4 my-4 w-full bg-gray-700" />
 
       <p className="text-red-500 py-1 font-bold text-lg">{errorMessage}</p>
 
