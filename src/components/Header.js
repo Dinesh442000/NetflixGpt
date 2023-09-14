@@ -4,6 +4,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO, USER_AVATAR } from "./constans";
 const Header = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -41,22 +42,17 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    //Unsubscribe when component unmounts
+    return () => unsubscribe;
   }, []);
 
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-t from-black z-10 flex justify-between ">
-      <img
-        className="w-44"
-        src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-        alt=""
-      ></img>
+      <img className="w-44" src={LOGO} alt=""></img>
       {user && (
         <div className="flex p-2">
-          <img
-            className="w-20"
-            alt="SignOut icon"
-            src="https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6"
-          ></img>
+          <img className="w-20" alt="SignOut icon" src={USER_AVATAR}></img>
           <img src={user?.photoURL} className="w-20" alt="user-img" />
           <button
             className="cursor-pointer font-bold text-white"
