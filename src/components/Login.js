@@ -10,6 +10,7 @@ import { auth } from "../utils/firebase";
 import { USER_AVATAR } from "./constans";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_URL } from "./constans";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -92,10 +93,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/42df4e1f-bef6-499e-87ff-c990584de314/5e7c383c-1f88-4983-b4da-06e14c0984ba/IN-en-20230904-popsignuptwoweeks-perspective_alpha_website_medium.jpg"
-          alt="logo"
-        ></img>
+        <img src={BG_URL} alt="logo"></img>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
