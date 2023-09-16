@@ -6,15 +6,14 @@ const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
   // console.log(movies.nowPlayingMovies);
   return (
-    <div>
-      {/*
-      Movie List- Popular
-        MovieCard-n
-      Movie List- Now Playing
-      Movie List- Trending
-      Movie List- Horror
-      */}
-      <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
+    <div className="bg-black">
+      <div className="-mt-64 pl-8 relative z-20">
+        <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
+        <MovieList title={"Popular"} movies={movies.nowPlayingMovies} />
+        <MovieList title={"UpComing"} movies={movies.nowPlayingMovies} />
+        <MovieList title={"Thriller"} movies={movies.nowPlayingMovies} />
+        <MovieList title={"Horror"} movies={movies.nowPlayingMovies} />
+      </div>
     </div>
   );
 };
