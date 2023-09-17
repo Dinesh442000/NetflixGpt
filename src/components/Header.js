@@ -9,8 +9,11 @@ import { toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/congifSlice";
 const Header = () => {
   const user = useSelector((store) => store.user);
+  const searchWindowView = useSelector((store) => store.gpt.showGptSearch);
+  console.log(searchWindowView);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -64,23 +67,25 @@ const Header = () => {
       <img className="w-44" src={LOGO} alt=""></img>
       {user && (
         <div className="flex p-2">
-          <select
-            name=""
-            id=""
-            className="p-2 bg-gray-500 text-white m-2"
-            onChange={handleLanguageChange}
-          >
-            {SUPPORTED_LANGUAGE.map((lang) => (
-              <option key={lang.identifier} value={lang.identifier}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
+          {searchWindowView && (
+            <select
+              name=""
+              id=""
+              className="p-2 bg-gray-500 text-white m-2"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGE.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             className="py-2 px-4 m-2 text-white bg-purple-600 rounded-lg my-2"
             onClick={handleGptSearchClick}
           >
-            GPT Search
+            {searchWindowView ? "HomePage" : "GPT Search"}
           </button>
           <img className="w-20" alt="SignOut icon" src={USER_AVATAR}></img>
           {/*<img src={user?.photoURL} className="w-20" alt="user-img" />*/}
