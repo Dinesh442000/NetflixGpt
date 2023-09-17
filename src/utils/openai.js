@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { OPENAI_KEY } from "../components/constans";
+import { OPENAI_KEY } from "../utils/constOpenAIkey";
 
 const openai = new OpenAI({
   apiKey: OPENAI_KEY,
