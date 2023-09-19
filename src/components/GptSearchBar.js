@@ -2,10 +2,24 @@ import React, { useRef } from "react";
 import lang from "../utils/languageConstants";
 import { useSelector } from "react-redux";
 import openai from "../utils/openai";
+import { API_OPTIONS } from "./constans";
 
 const GptSearchBar = () => {
   const getlang = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
+
+  //search movie in tmdb
+  const searchMovieTMDB = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      API_OPTIONS
+    );
+    const json = await data.json();
+    //console.log(json);
+    return json.results;
+  };
 
   const handleGptSearchClick = async () => {
     console.log(searchText.current.value);
@@ -13,13 +27,21 @@ const GptSearchBar = () => {
     const gptQuery =
       "Act as a movie recommendation system and show results for above query : " +
       searchText.current.value +
-      " .Show results for 5 movies names separated by comma take above example. Example : Gadar, Prem, Dhadak, Pink, Sholye";
+      " .Show results for only 5 movies names separated by comma without numbering take above example. Example : Gadar, Prem, Dhadak, Pink, Sholye";
     const gptResults = await openai.chat.completions.create({
       messages: [{ role: "user", content: gptQuery }],
       model: "gpt-3.5-turbo",
     });
 
-    console.log(gptResults.choices);
+    //console.log(gptResults.choices);
+    const gptMovies = gptResults.choices[0]?.message?.content.split(",");
+    //console.log(gptMovies);
+    //for each movie search tmdb api
+    const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
+    console.log(promiseArray);
+
+    const tmdbResults = await Promise.all(promiseArray);
+    console.log(tmdbResults);
   };
   //console.log(getlang);
   return (
