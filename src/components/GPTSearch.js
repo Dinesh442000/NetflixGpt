@@ -7,7 +7,7 @@ const GPTSearch = () => {
   return (
     <div>
       {/*GPT Serach bar GPT Movie Suggession*/}
-      <div className="absolute -z-10">
+      <div className="fixed -z-10">
         <img src={BG_URL} alt="logo"></img>
       </div>
       <GptSearchBar />
